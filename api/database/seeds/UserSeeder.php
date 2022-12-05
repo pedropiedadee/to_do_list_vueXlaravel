@@ -14,11 +14,10 @@ class UserSeeder extends Seeder
     {
         factory(User::class)->create([
             'first_name' => 'Pedro',
-            'last_name' => 'Piedade',
-            'email' => 'pedro@gmail.com',
-            'password' => bcrypt('Password1')
+            'last_name'  => 'Piedade',
+            'email'      => 'pedro@gmail.com',
+            'password'   => bcrypt('Password1'),
         ]);
-
         factory(User::class, 5)->create();
     }
 }
