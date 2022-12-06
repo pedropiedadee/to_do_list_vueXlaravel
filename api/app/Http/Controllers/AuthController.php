@@ -66,4 +66,21 @@ class AuthController extends Controller
 
         return new UserResource($user);
     }
+
+     /**
+     * @param AuthForgotPasswordRequest $request
+     * @return string
+     */
+    public function forgotPassword(AuthForgotPasswordRequest $request)
+    {
+        $input = $request->validated();
+        return $this->authService->forgotPassword($input['email']);
+    }
+
+    public function resetPassword(AuthResetPasswordRequest $request)
+    {
+        $input = $request->validated();
+        return $this->authService->resetPassword($input['email'], $input['password'], $input['token']);
+    }
+
 }
