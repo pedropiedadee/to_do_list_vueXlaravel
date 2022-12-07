@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
@@ -51,7 +52,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if($exception instanceof ModelNotFoundException){
+        if($exception instanceof AuthorizationException) {
+            return response()->json([
+                'error' => class_basename(AuthorizationException::class),
+                'message' => 'This action is unouthorized'
+            ], 403);
+        }
+        else if($exception instanceof ModelNotFoundException){
             $modelName = class_basename($exception->getModel());
             $apiErrorCode = $modelName . 'NotFoundException';
             $message = $modelName . ' not found.';
